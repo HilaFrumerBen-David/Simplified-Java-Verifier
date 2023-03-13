@@ -1,0 +1,7 @@
+int a = 60;
+
+void f() {
+	while (a) {
+	}
+	return;
+}

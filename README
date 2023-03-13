@@ -1,0 +1,61 @@
+rinatl
+hila953
+
+Error handling - during the exercise we use IOException when needed (illegal file name). Also, we chose to create 
+a new class called fileException which inherits from Exception. That way, when we throw an exception, that's not
+corresponding with IOException, we throw fileExcetion. The parameter we give is a message describing the problem. 
+Object Oriented Design - we decided to use two abstrat classes, command and variable. All the different commands
+in the files are type of command ("is a" relation). Also, they have methods that we would like to use - for example,
+checking validation. But, there is no meaning in an instance of variable because each variable has a kind. That's
+why we decided an abstract class will be the best approach. The same is valid also for cammand (and abstract class 
+that each type of command inherits from it). The variables are in their package and commands in other. The way to 
+create them is via factories. Aslo, we are  making few stages to go through the file and parse - we decided that 
+the stages that are in different files, will be in a package of their own. That way the package has its own 
+responsablity. Due to the fact that each type of variable inherits from an abstract class and being created in
+factory, to add other type of it will be to create the class (with the inheritance and the relevant methods), and 
+create a case to it in the factory. We also thought of using interfaces (for the commands and for the varaibles),
+but we decided not to for some reasons. First of all, the meaning for us was important - a return commang is a
+command. In addition, there are some fields and methods that are common.
+To handle different method return type, we would add to the MethodDeclerationCommand method for the return type,
+also extend the validation of the declaration to handle the different return types. Also, in the firstFilter when
+creating the method declaration we would add the return type, And add a validate method that the type is valid 
+(as in the exercise instructions). Also, in the mainFilter we would add a method that when the return command is 
+written, we would also check if the return type is as in the declaration. We would also change the ReturnCommand
+file to handle the different types (create the fit variable to it). Also, new regex to check validation of the 
+syntax of the return with variable.
+To handle classes, we will modify the Scope file to handle the scopes of classes too - methods to check when the
+class starts and ends, and that the variables declared in a class are used in it (can't be used in other class if 
+not declared there). Also, We would add regex to the class starting (class XXX {) to check the syntax when
+getting to a line that is relevant to it. The validationof the class would be in the command package, in a new class
+that handles class commands. In the mainFilter class, when getting to a line like this, we will validate and 
+create an instance of the class explained.
+Regular Expressions - we used the regex "(([a-zA-Z][a-zA-Z0-9_]*)|([_][a-zA-Z0-9_]+))" for variable name. There 
+are two options that this regex covers (the options specified in the instructions). First, the name will start 
+with a letter, then it can end or continue with some combination of letters, numbers or _. The other option is to
+start with _, but if so the name must have length > 1, which means it has to have a compbination of letters, numbers
+or _. Because it is mandatory in this case, we used +.
+another regex we used is "[a-zA-Z]+[a-zA-Z0-9_]*" for method name. It differs from the variable name regex
+because the methods names have start with a letter (big or small), that's why we used +. After it, any combination
+of letters, numbers or _ may appear. 
+tests - 
+1 - if statement with true, no whitespaces, in method
+2 - if statement with int, with whitespaces, in method
+3 - if statement with int, with whitespaces, not in method
+4 - if statement with int or true, in method
+5 - if statement it true, not in method 
+6 - declaration of double and assignment
+7 - declaration of int and assignment
+8 - declaration of char and assignment
+9 - declaration of boolean and assignment
+10 - declaration of string and assignment
+11 - declaration of final string and assignment with whitespaces
+12 - method without params with return
+13 - method with declaration of int, and returning it
+14 - only return command
+15 - method with final param and return
+16 - method with int param and return
+17 - decalaration of char and comment
+18 - method with while, return command, empty spaces
+19 - method with while command missing bracket, return command
+20 - declaration of int (global), method with while using this int as 
+the term, return command 
